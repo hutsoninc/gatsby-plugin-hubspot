@@ -1,0 +1,23 @@
+# System generated files
+.DS_Store
+
+# Logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# Development/Environment
+.env
+dev
+test
+
+# Temporary
+temp
+temp-*
+*.tmp
+
+gatsby-node.js
+gatsby-ssr.js
+default-options.js
+!src/*.js

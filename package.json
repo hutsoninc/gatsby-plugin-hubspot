@@ -1,0 +1,31 @@
+{
+  "name": "gatsby-plugin-hubspot",
+  "version": "1.0.0",
+  "description": "A Gatsby plugin to easily add a HubSpot embed code to your site.",
+  "main": "index.js",
+  "scripts": {
+    "build": "set NODE_ENV=production && babel src --out-dir .",
+    "prepublishOnly": "npm run build"
+  },
+  "author": {
+    "name": "Austin Gordon",
+    "email": "agordon@hutsoninc.com",
+    "url": "https://github.com/AustinLeeGordon"
+  },
+  "license": "MIT",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "hubspot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hutsoninc/gatsby-plugin-hubspot"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
