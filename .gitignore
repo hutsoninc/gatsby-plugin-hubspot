@@ -10,7 +10,6 @@ node_modules/
 # Development/Environment
 .env
 dev
-test
 
 # Temporary
 temp
