@@ -4,5 +4,5 @@ notifications:
     on_success: never
     on_failure: always
 node_js:
-  - "iojs"
-  - "4"
+  - "node"
+  - "8"
