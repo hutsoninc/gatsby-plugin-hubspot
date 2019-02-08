@@ -18,7 +18,7 @@ export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
                 dangerouslySetInnerHTML={{
                     __html: `
                         var _hsq = window._hsq = window._hsq || [];
-                        _hsq.push(['setPath', ${window.location.pathname + window.location.search + window.location.hash}]);
+                        _hsq.push(['setPath', window.location.pathname + window.location.search + window.location.hash]);
                     `
                 }}
             />,
