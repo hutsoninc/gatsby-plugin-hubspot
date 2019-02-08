@@ -1,19 +1,5 @@
-# System generated files
-.DS_Store
-
-# Logs
-*.log
-
-# Dependency directories
 node_modules/
-
-# Development/Environment
+.DS_Store
 .env
 dev
 test
-src/
-
-# Temporary
-temp
-temp-*
-*.tmp
