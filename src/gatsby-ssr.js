@@ -1,5 +1,5 @@
 import React from 'react';
-import { oneLine } from 'common-tags';
+import { oneline } from './utils';
 
 export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
     if (process.env.NODE_ENV === 'production') {
@@ -16,7 +16,7 @@ export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
                 defer
                 src={`//js.hs-scripts.com/${trackingCode}.js`}
                 dangerouslySetInnerHTML={{
-                    __html: oneLine`
+                    __html: oneline`
                         var _hsq = window._hsq = window._hsq || [];
                         _hsq.push(['setPath', window.location.pathname + window.location.search + window.location.hash]);
                         ${respectDNT === true ? `if (window.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack || 'msTrackingProtectionEnabled' in window.external) {

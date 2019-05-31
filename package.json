@@ -26,11 +26,10 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/cli": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
     "babel-preset-gatsby-package": "^0.1.4",
     "cross-env": "^5.2.0",
-    "jest": "^23.6.0"
-  },
-  "dependencies": {
-    "common-tags": "^1.8.0"
+    "jest": "^24.8.0",
+    "react": "^16.8.6"
   }
 }

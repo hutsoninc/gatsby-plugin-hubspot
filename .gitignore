@@ -5,4 +5,5 @@ dev
 gatsby-node.js
 gatsby-ssr.js
 gatsby-browser.js
+utils.js
 !src/*.js
