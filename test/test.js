@@ -1,7 +1,9 @@
-const { onRouteUpdate } = require('../src/gatsby-browser');
-const { onRenderBody } = require('../src/gatsby-ssr');
+jest.useFakeTimers();
 
 const env = process.env;
+
+const { onRouteUpdate } = require('../src/gatsby-browser');
+const { onRenderBody } = require('../src/gatsby-ssr');
 
 describe('gatsby-plugin-hubspot', () => {
 
@@ -103,6 +105,9 @@ describe('gatsby-plugin-hubspot', () => {
         beforeEach(() => {
             global.window = Object.assign(global.window, {
                 _hsq: [],
+                requestAnimationFrame: jest.fn(cb => {
+                    cb();
+                }),
             });
         });
 
@@ -129,6 +134,19 @@ describe('gatsby-plugin-hubspot', () => {
             });
 
             expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView'], ['setPath', '/page/sub-page'], ['trackPageView']]);
+        });
+
+        it('works when window.requestAnimationFrame is undefined', () => {
+            delete global.window.requestAnimationFrame;
+
+            onRouteUpdate({ location });
+
+            expect(global.window._hsq).toStrictEqual([]);
+
+            jest.runAllTimers();
+
+            expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView']]);
+            expect(setTimeout).toHaveBeenCalledTimes(1);
         });
 
         it('does nothing when window._hsq is undefined', () => {
