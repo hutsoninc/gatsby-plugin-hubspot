@@ -96,9 +96,9 @@ describe('gatsby-plugin-hubspot', () => {
 
         const location = {
             hash: '#hash',
-            pathname: '/pathname',
+            pathname: '/page',
             search: '?search'
-        }
+        };
 
         beforeEach(() => {
             global.window = Object.assign(global.window, {
@@ -114,7 +114,21 @@ describe('gatsby-plugin-hubspot', () => {
         it('tracks page view', () => {
             onRouteUpdate({ location });
 
-            expect(global.window._hsq).toStrictEqual([['setPath', '/pathname?search#hash'], ['trackPageView']]);
+            expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView']]);
+        });
+
+        it('tracks multiple page views', () => {
+            onRouteUpdate({ location });
+
+            onRouteUpdate({
+                location: {
+                    hash: '',
+                    pathname: '/page/sub-page',
+                    search: ''
+                }
+            });
+
+            expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView'], ['setPath', '/page/sub-page'], ['trackPageView']]);
         });
 
         it('does nothing when window._hsq is undefined', () => {
