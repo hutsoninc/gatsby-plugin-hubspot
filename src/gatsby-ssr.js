@@ -1,12 +1,20 @@
 import React from 'react';
 import { oneline } from './utils';
+import defaultOptions from './default-options';
 
-export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
+export function onRenderBody({ reporter, setPostBodyComponents }, options) {
+
     if (process.env.NODE_ENV === 'production') {
-        let { trackingCode, respectDNT } = pluginOptions;
+
+        options = Object.assign(defaultOptions, options);
+
+        const { trackingCode, respectDNT } = options;
+
         if (trackingCode === undefined) {
-            console.error('No HubSpot tracking code provided.');
+            reporter.warn('No HubSpot tracking code provided.');
+            return;
         }
+
         setPostBodyComponents([
             <script
                 type="text/javascript"
@@ -19,7 +27,7 @@ export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
                     __html: oneline`
                         var _hsq = window._hsq = window._hsq || [];
                         _hsq.push(['setPath', window.location.pathname + window.location.search + window.location.hash]);
-                        ${respectDNT === true ? `if (window.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack || 'msTrackingProtectionEnabled' in window.external) {
+                        ${respectDNT ? `if (window.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack || 'msTrackingProtectionEnabled' in window.external) {
                             if (window.doNotTrack == "1" || navigator.doNotTrack == "yes" || navigator.doNotTrack == "1" || navigator.msDoNotTrack == "1" || window.external.msTrackingProtectionEnabled()) {
                                 _hsq.push(['doNotTrack']);
                             }
@@ -31,4 +39,5 @@ export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
         ]);
 
     }
+
 }

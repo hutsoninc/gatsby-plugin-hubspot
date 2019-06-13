@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production && babel src --out-dir .",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && jest"
+    "test": "jest"
   },
   "author": {
     "name": "Austin Gordon",

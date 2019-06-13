@@ -6,4 +6,5 @@ gatsby-node.js
 gatsby-ssr.js
 gatsby-browser.js
 utils.js
+default-options.js
 !src/*.js

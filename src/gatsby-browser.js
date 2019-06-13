@@ -1,7 +1,12 @@
-export function onRouteUpdate({ location }) {
-    if (process.env.NODE_ENV === 'production' && typeof _hsq === 'object') {
-        let _hsq = window._hsq = window._hsq || [];
-        _hsq.push(['setPath', location ? location.pathname + location.search + location.hash : undefined]);
-        _hsq.push(['trackPageView']);
+export function onRouteUpdate({
+    location: {
+        hash,
+        pathname,
+        search,
+    },
+}) {
+    if (process.env.NODE_ENV === 'production' && typeof window._hsq === 'object') {
+        window._hsq.push(['setPath', `${pathname}${search}${hash}`]);
+        window._hsq.push(['trackPageView']);
     }
 }
