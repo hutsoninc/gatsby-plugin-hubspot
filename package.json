@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-hubspot",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A Gatsby plugin to easily add a HubSpot embed code to your site.",
   "main": "index.js",
   "scripts": {
