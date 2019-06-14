@@ -1,6 +1,6 @@
 # gatsby-plugin-hubspot
 
-[![Current npm package version](https://img.shields.io/npm/v/gatsby-plugin-hubspot.svg)](https://www.npmjs.com/package/gatsby-plugin-hubspot) 
+[![Build Status](https://travis-ci.com/hutsoninc/gatsby-plugin-hubspot.svg?branch=master)](https://travis-ci.com/hutsoninc/gatsby-plugin-hubspot) [![Current npm package version](https://img.shields.io/npm/v/gatsby-plugin-hubspot.svg)](https://www.npmjs.com/package/gatsby-plugin-hubspot) 
 
 A Gatsby plugin to easily add a HubSpot embed code to your site.
 
