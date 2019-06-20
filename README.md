@@ -18,8 +18,8 @@ module.exports = {
       resolve: "gatsby-plugin-hubspot",
       options: {
           trackingCode: "1234567",
-          // Setting this parameter is optional
-          respectDNT: true
+          respectDNT: true,
+          productionOnly: true,
       },
     },
   ]
@@ -30,9 +30,19 @@ module.exports = {
 
 #### respectDNT
 
+Type: `boolean`<br/>
+Default: `false`
+
 By enabling this option, visitors with "Do Not Track" enabled will have a `__hs_do_not_track` cookie placed in their browser. This prevents the HubSpot tracking code from sending any information for the visitor.
 
 More information about HubSpot cookies and privacy can be found in the [HubSpot Tracking Code API documentation](https://developers.hubspot.com/docs/methods/tracking_code_api/tracking_code_overview).
+
+#### productionOnly
+
+Type: `boolean`<br/>
+Default: `true`
+
+Only load the script when `process.env.NODE_ENV` is set to `production`.
 
 ## License
 

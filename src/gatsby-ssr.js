@@ -2,12 +2,12 @@ import React from 'react';
 import { oneline } from './utils';
 import defaultOptions from './default-options';
 
-export function onRenderBody({ reporter, setPostBodyComponents }, options) {
-    if (process.env.NODE_ENV !== 'production') {
+export function onRenderBody({ reporter, setPostBodyComponents }, pluginOptions) {
+    const options = Object.assign(defaultOptions, pluginOptions);
+
+    if (options.productionOnly && process.env.NODE_ENV !== 'production') {
         return;
     }
-
-    options = Object.assign(defaultOptions, options);
 
     const { trackingCode, respectDNT } = options;
 

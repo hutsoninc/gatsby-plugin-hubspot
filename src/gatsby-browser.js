@@ -1,5 +1,5 @@
 export function onRouteUpdate({ location }) {
-    if (process.env.NODE_ENV !== 'production' || typeof window._hsq !== 'object') {
+    if (process.env.NODE_ENV !== 'production' || !Array.isArray(window._hsq)) {
         return;
     }
 

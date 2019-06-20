@@ -7,7 +7,7 @@ const { onRenderBody } = require('../src/gatsby-ssr');
 
 describe('gatsby-plugin-hubspot', () => {
 
-    beforeAll(() => {
+    beforeEach(() => {
         process.env = Object.assign(env, {
             NODE_ENV: 'production',
         });
@@ -15,18 +15,24 @@ describe('gatsby-plugin-hubspot', () => {
 
     describe('onRenderBody', () => {
 
+        const setup = (options = {}) => {
+            const setPostBodyComponents = jest.fn();
+            const reporter = {
+                warn: jest.fn(),
+            };
+
+            onRenderBody({ reporter, setPostBodyComponents }, options);
+
+            return { options, reporter, setPostBodyComponents };
+        }
+
         it('imports', () => {
             expect(onRenderBody).toBeDefined();
             expect(typeof onRenderBody).toEqual('function');
         });
 
         it('reports when no tracking code is provided', () => {
-            const setPostBodyComponents = jest.fn();
-            const reporter = {
-                warn: jest.fn(),
-            };
-
-            onRenderBody({ reporter, setPostBodyComponents });
+            const { reporter, setPostBodyComponents } = setup();
 
             expect(setPostBodyComponents).toHaveBeenCalledTimes(0);
             expect(reporter.warn).toHaveBeenCalledTimes(1);
@@ -37,15 +43,11 @@ describe('gatsby-plugin-hubspot', () => {
         });
 
         it('works when tracking code is provided', () => {
-            const setPostBodyComponents = jest.fn();
-            const reporter = {
-                warn: jest.fn(),
-            };
             const options = {
                 trackingCode: 1234567,
             };
 
-            onRenderBody({ reporter, setPostBodyComponents }, options);
+            const { reporter, setPostBodyComponents } = setup(options);
 
             expect(reporter.warn).toHaveBeenCalledTimes(0);
             expect(setPostBodyComponents).toHaveBeenCalledTimes(1);
@@ -58,15 +60,11 @@ describe('gatsby-plugin-hubspot', () => {
         });
 
         it('uses default options', () => {
-            const setPostBodyComponents = jest.fn();
-            const reporter = {
-                warn: jest.fn(),
-            };
             const options = {
                 trackingCode: 1234567,
             };
 
-            onRenderBody({ reporter, setPostBodyComponents }, options);
+            const { setPostBodyComponents } = setup(options);
 
             const resultObj = setPostBodyComponents.mock.calls[0][0];
 
@@ -75,21 +73,30 @@ describe('gatsby-plugin-hubspot', () => {
         });
 
         it('uses respectDNT option', () => {
-            const setPostBodyComponents = jest.fn();
-            const reporter = {
-                warn: jest.fn(),
-            };
             const options = {
                 trackingCode: 1234567,
                 respectDNT: true,
             };
 
-            onRenderBody({ reporter, setPostBodyComponents }, options);
+            const { setPostBodyComponents } = setup(options);
 
             const resultObj = setPostBodyComponents.mock.calls[0][0];
 
             expect(Array.isArray(resultObj)).toBe(true);
             expect(resultObj[0].props.dangerouslySetInnerHTML.__html).toMatch(/doNotTrack/);
+        });
+
+        it('uses productionOnly option', () => {
+            process.env.NODE_ENV = 'test';
+
+            const options = {
+                trackingCode: 1234567,
+                productionOnly: false,
+            };
+
+            const { setPostBodyComponents } = setup(options);
+
+            expect(setPostBodyComponents).toHaveBeenCalledTimes(1);
         });
 
     });
@@ -167,7 +174,7 @@ describe('gatsby-plugin-hubspot', () => {
 
     });
 
-    afterAll(() => {
+    afterEach(() => {
         process.env = env;
     });
 
