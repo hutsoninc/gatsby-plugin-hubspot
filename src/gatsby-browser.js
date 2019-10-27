@@ -11,7 +11,7 @@ export function onRouteUpdate({ location }) {
             : undefined;
         window._hsq.push(['setPath', path]);
         window._hsq.push(['trackPageView']);
-    }
+    };
 
     if (typeof window.requestAnimationFrame === 'function') {
         window.requestAnimationFrame(() => {

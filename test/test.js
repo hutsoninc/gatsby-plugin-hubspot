@@ -6,7 +6,6 @@ const { onRouteUpdate } = require('../src/gatsby-browser');
 const { onRenderBody } = require('../src/gatsby-ssr');
 
 describe('gatsby-plugin-hubspot', () => {
-
     beforeEach(() => {
         process.env = Object.assign(env, {
             NODE_ENV: 'production',
@@ -14,32 +13,23 @@ describe('gatsby-plugin-hubspot', () => {
     });
 
     describe('onRenderBody', () => {
-
         const setup = (options = {}) => {
             const setPostBodyComponents = jest.fn();
-            const reporter = {
-                warn: jest.fn(),
-            };
 
-            onRenderBody({ reporter, setPostBodyComponents }, options);
+            onRenderBody({ setPostBodyComponents }, options);
 
-            return { options, reporter, setPostBodyComponents };
-        }
+            return { options, setPostBodyComponents };
+        };
 
         it('imports', () => {
             expect(onRenderBody).toBeDefined();
             expect(typeof onRenderBody).toEqual('function');
         });
 
-        it('reports when no tracking code is provided', () => {
-            const { reporter, setPostBodyComponents } = setup();
+        it('does nothing when no tracking code is provided', () => {
+            const { setPostBodyComponents } = setup();
 
             expect(setPostBodyComponents).toHaveBeenCalledTimes(0);
-            expect(reporter.warn).toHaveBeenCalledTimes(1);
-            expect(reporter.warn).toHaveBeenCalledWith(
-                expect.stringContaining('No HubSpot tracking code provided.')
-            );
-
         });
 
         it('works when tracking code is provided', () => {
@@ -47,9 +37,8 @@ describe('gatsby-plugin-hubspot', () => {
                 trackingCode: 1234567,
             };
 
-            const { reporter, setPostBodyComponents } = setup(options);
+            const { setPostBodyComponents } = setup(options);
 
-            expect(reporter.warn).toHaveBeenCalledTimes(0);
             expect(setPostBodyComponents).toHaveBeenCalledTimes(1);
 
             const resultObj = setPostBodyComponents.mock.calls[0][0];
@@ -69,7 +58,9 @@ describe('gatsby-plugin-hubspot', () => {
             const resultObj = setPostBodyComponents.mock.calls[0][0];
 
             expect(Array.isArray(resultObj)).toBe(true);
-            expect(resultObj[0].props.dangerouslySetInnerHTML.__html).not.toMatch(/doNotTrack/);
+            expect(
+                resultObj[0].props.dangerouslySetInnerHTML.__html
+            ).not.toMatch(/doNotTrack/);
         });
 
         it('uses respectDNT option', () => {
@@ -83,7 +74,9 @@ describe('gatsby-plugin-hubspot', () => {
             const resultObj = setPostBodyComponents.mock.calls[0][0];
 
             expect(Array.isArray(resultObj)).toBe(true);
-            expect(resultObj[0].props.dangerouslySetInnerHTML.__html).toMatch(/doNotTrack/);
+            expect(resultObj[0].props.dangerouslySetInnerHTML.__html).toMatch(
+                /doNotTrack/
+            );
         });
 
         it('uses productionOnly option', () => {
@@ -98,15 +91,13 @@ describe('gatsby-plugin-hubspot', () => {
 
             expect(setPostBodyComponents).toHaveBeenCalledTimes(1);
         });
-
     });
 
     describe('onRouteUpdate', () => {
-
         const location = {
             hash: '#hash',
             pathname: '/page',
-            search: '?search'
+            search: '?search',
         };
 
         beforeEach(() => {
@@ -126,7 +117,10 @@ describe('gatsby-plugin-hubspot', () => {
         it('tracks page view', () => {
             onRouteUpdate({ location });
 
-            expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView']]);
+            expect(global.window._hsq).toStrictEqual([
+                ['setPath', '/page?search#hash'],
+                ['trackPageView'],
+            ]);
         });
 
         it('tracks multiple page views', () => {
@@ -136,11 +130,16 @@ describe('gatsby-plugin-hubspot', () => {
                 location: {
                     hash: '',
                     pathname: '/page/sub-page',
-                    search: ''
-                }
+                    search: '',
+                },
             });
 
-            expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView'], ['setPath', '/page/sub-page'], ['trackPageView']]);
+            expect(global.window._hsq).toStrictEqual([
+                ['setPath', '/page?search#hash'],
+                ['trackPageView'],
+                ['setPath', '/page/sub-page'],
+                ['trackPageView'],
+            ]);
         });
 
         it('works when window.requestAnimationFrame is undefined', () => {
@@ -152,7 +151,10 @@ describe('gatsby-plugin-hubspot', () => {
 
             jest.runAllTimers();
 
-            expect(global.window._hsq).toStrictEqual([['setPath', '/page?search#hash'], ['trackPageView']]);
+            expect(global.window._hsq).toStrictEqual([
+                ['setPath', '/page?search#hash'],
+                ['trackPageView'],
+            ]);
             expect(setTimeout).toHaveBeenCalledTimes(1);
         });
 
@@ -171,11 +173,9 @@ describe('gatsby-plugin-hubspot', () => {
 
             expect(global.window._hsq).toStrictEqual([]);
         });
-
     });
 
     afterEach(() => {
         process.env = env;
     });
-
 });

@@ -1,18 +1,17 @@
 import React from 'react';
-import { oneline } from './utils';
+import { isDefined, oneline } from './utils';
 import defaultOptions from './default-options';
 
-export function onRenderBody({ reporter, setPostBodyComponents }, pluginOptions) {
-    const options = Object.assign(defaultOptions, pluginOptions);
+export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
+    const { productionOnly, respectDNT, trackingCode } = Object.assign(
+        defaultOptions,
+        pluginOptions
+    );
 
-    if (options.productionOnly && process.env.NODE_ENV !== 'production') {
-        return;
-    }
-
-    const { trackingCode, respectDNT } = options;
-
-    if (trackingCode === undefined) {
-        reporter.warn('No HubSpot tracking code provided.');
+    if (
+        (productionOnly && process.env.NODE_ENV !== 'production') ||
+        !isDefined(trackingCode)
+    ) {
         return;
     }
 
@@ -28,13 +27,17 @@ export function onRenderBody({ reporter, setPostBodyComponents }, pluginOptions)
                 __html: oneline`
                     var _hsq = window._hsq = window._hsq || [];
                     _hsq.push(['setPath', window.location.pathname + window.location.search + window.location.hash]);
-                    ${respectDNT ? `if (window.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack || 'msTrackingProtectionEnabled' in window.external) {
+                    ${
+                        respectDNT
+                            ? `if (window.doNotTrack || navigator.doNotTrack || navigator.msDoNotTrack || 'msTrackingProtectionEnabled' in window.external) {
                         if (window.doNotTrack == "1" || navigator.doNotTrack == "yes" || navigator.doNotTrack == "1" || navigator.msDoNotTrack == "1" || window.external.msTrackingProtectionEnabled()) {
                             _hsq.push(['doNotTrack']);
                         }
-                    }` : ``}
+                    }`
+                            : ``
+                    }
                     
-                `
+                `,
             }}
         />,
     ]);
