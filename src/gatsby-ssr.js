@@ -4,6 +4,7 @@ import defaultOptions from './default-options';
 
 export function onRenderBody({ setPostBodyComponents }, pluginOptions) {
     const { productionOnly, respectDNT, trackingCode } = Object.assign(
+        {},
         defaultOptions,
         pluginOptions
     );
