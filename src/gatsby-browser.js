@@ -1,5 +1,16 @@
-export function onRouteUpdate({ location }) {
-    if (process.env.NODE_ENV !== 'production' || !Array.isArray(window._hsq)) {
+import defaultOptions from './default-options';
+
+export function onRouteUpdate({ location }, pluginOptions) {
+    const { productionOnly } = Object.assign(
+        {},
+        defaultOptions,
+        pluginOptions
+    );
+    
+    if (
+        (productionOnly && process.env.NODE_ENV !== 'production') ||
+        !Array.isArray(window._hsq)
+    ) {
         return;
     }
 
