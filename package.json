@@ -35,7 +35,7 @@
     "react": "^16.4.2"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0",
+    "gatsby": "^2.0.0 || ^3.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2"
   }
