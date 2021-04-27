@@ -32,11 +32,11 @@
     "babel-preset-gatsby-package": "^0.2.9",
     "cross-env": "^6.0.3",
     "jest": "^24.9.0",
-    "react": "^16.4.2"
+    "react": "^17.0.0"
   },
   "peerDependencies": {
     "gatsby": "^2.0.0 || ^3.0.0",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^17.0.0"
   }
 }
