@@ -59,7 +59,7 @@ describe('gatsby-plugin-hubspot', () => {
 
             expect(Array.isArray(resultObj)).toBe(true);
             expect(
-                resultObj[0].props.dangerouslySetInnerHTML.__html
+                resultObj[1].props.dangerouslySetInnerHTML.__html
             ).not.toMatch(/doNotTrack/);
         });
 
@@ -74,7 +74,7 @@ describe('gatsby-plugin-hubspot', () => {
             const resultObj = setPostBodyComponents.mock.calls[0][0];
 
             expect(Array.isArray(resultObj)).toBe(true);
-            expect(resultObj[0].props.dangerouslySetInnerHTML.__html).toMatch(
+            expect(resultObj[1].props.dangerouslySetInnerHTML.__html).toMatch(
                 /doNotTrack/
             );
         });
@@ -103,7 +103,7 @@ describe('gatsby-plugin-hubspot', () => {
         beforeEach(() => {
             global.window = Object.assign(global.window, {
                 _hsq: [],
-                requestAnimationFrame: jest.fn(cb => {
+                requestAnimationFrame: jest.fn((cb) => {
                     cb();
                 }),
             });
