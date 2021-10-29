@@ -1,13 +1,14 @@
 {
   "name": "gatsby-plugin-hubspot",
   "version": "1.3.8",
-  "description": "A Gatsby plugin to easily add a HubSpot embed code to your site.",
+  "description": "Gatsby plugin to add a HubSpot embed code to your site.",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production && babel src --out-dir .",
-    "prepublishOnly": "npm run build",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
     "prettier": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "author": {
     "name": "Austin Gordon",
@@ -25,22 +26,25 @@
     "url": "https://github.com/hutsoninc/gatsby-plugin-hubspot"
   },
   "dependencies": {
-    "@babel/runtime": "^7.6.3"
+    "@babel/runtime": "^7.15.4"
   },
   "devDependencies": {
     "@austinleegordon/prettier-config": "^1.0.0",
-    "@babel/cli": "^7.6.4",
-    "@babel/core": "^7.6.4",
-    "babel-preset-gatsby-package": "^0.2.9",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "babel-preset-gatsby-package": "^2.0.0",
     "cross-env": "^7.0.3",
     "jest": "^24.9.0",
     "prettier": "2.4.0",
-    "react": "^16.4.2"
+    "react": "^16.9.0"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0 || ^3.0.0",
-    "react": "^16.4.2 || ^17.0.0",
-    "react-dom": "^16.4.2 || ^17.0.0"
+    "gatsby": "^4.0.0-next",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
+  },
+  "engines": {
+    "node": ">=14.15.0"
   },
   "prettier": "@austinleegordon/prettier-config"
 }
