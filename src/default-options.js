@@ -1,4 +1,6 @@
-export default {
-    respectDNT: false,
-    productionOnly: true,
-};
+const defaultOptions = {
+  respectDNT: false,
+  productionOnly: true,
+}
+
+export default defaultOptions
