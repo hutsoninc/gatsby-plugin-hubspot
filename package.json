@@ -26,22 +26,22 @@
     "url": "https://github.com/hutsoninc/gatsby-plugin-hubspot"
   },
   "dependencies": {
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.23.8"
   },
   "devDependencies": {
     "@austinleegordon/prettier-config": "^1.0.0",
-    "@babel/cli": "^7.15.4",
-    "@babel/core": "^7.15.5",
-    "babel-preset-gatsby-package": "^2.0.0",
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.7",
+    "babel-preset-gatsby-package": "^3.13.0",
     "cross-env": "^7.0.3",
     "jest": "^24.9.0",
     "prettier": "2.4.0",
-    "react": "^16.9.0"
+    "react": "^18.2.0"
   },
   "peerDependencies": {
-    "gatsby": "^4.0.0-next",
-    "react": "^16.9.0 || ^17.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0"
+    "gatsby": "^5.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "engines": {
     "node": ">=14.15.0"
